@@ -60,9 +60,9 @@ void decompress(string filein, string fileout) {
         cout << text << endl;
         /*will be used later*/
         int movingOnes = ones;
-        int pos = zeros + 1;
+        int pos = zeros;
         for (unsigned int i = 0; i < zeros; i++) {
-            dll.moveNNodesLeft(ones-1, pos);
+            dll.moveNNodesLeft(ones, pos);
             text = dll.toString();
             cout << text << endl;
             pos--;
