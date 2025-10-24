@@ -47,7 +47,8 @@ void DLinkedList::moveNNodesLeft(unsigned int N, unsigned int at) {
     Node *newBack = nullptr;  // Initialize to nullptr
     if (at > 1) newBack = frontMove->back->back;
     Node *move = frontMove->back;
-    Node *oldNext = temp->next;
+    Node *oldNext = nullptr;
+    if (temp->next != nullptr) oldNext = temp->next;
     if (newBack != nullptr) {
         newBack->next = frontMove;
         frontMove->back = newBack;
@@ -58,7 +59,7 @@ void DLinkedList::moveNNodesLeft(unsigned int N, unsigned int at) {
     }
     temp->next = move;
     move->back = temp;
-    oldNext->back = move;
+    if (oldNext!=nullptr) oldNext->back = move;
     move->next = oldNext;
 }
 string DLinkedList::toString() {
