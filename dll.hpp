@@ -17,13 +17,19 @@ struct Node {
     bool bit;
     Node* next;
     Node* back;
+    Node(Node* const &node);
+    Node();
+    Node(bool bit);
 };
 
 class DLinkedList {
     public:
         DLinkedList(unsigned int ones, unsigned int zeros);
+        DLinkedList(DLinkedList const &doublelinkedlist);
+        ~DLinkedList();
         void moveNNodesLeft(unsigned int N, unsigned int at);
         string toString();
+        Node* getHead()const;
     private:
         Node* head;
 };

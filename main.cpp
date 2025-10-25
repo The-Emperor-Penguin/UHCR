@@ -59,13 +59,15 @@ void decompress(string filein, string fileout) {
         string text = dll.toString();
         cout << text << endl;
         /*will be used later*/
-        int movingOnes = ones;
-        int pos = zeros;
-        for (unsigned int i = 0; i < zeros; i++) {
-            dll.moveNNodesLeft(ones, pos);
-            text = dll.toString();
-            cout << text << endl;
-            pos--;
+        for (unsigned int n = ones; n > 0; n--){
+            DLinkedList workerlist = DLinkedList(dll);
+            int pos = zeros;
+            for (unsigned int i = 0; i < zeros; i++) {
+                workerlist.moveNNodesLeft(n, pos);
+                text = workerlist.toString();
+                cout << text << endl;
+                pos--;
+            }
         }
 
     }

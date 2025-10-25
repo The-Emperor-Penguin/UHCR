@@ -1,24 +1,53 @@
 #include "dll.hpp"
 
+Node::Node(Node* const &node) {
+    if (node == nullptr) return;
+    bit = node->bit;
+    next = node->next;
+    back = node->back;
+
+}
+
+Node::Node() {
+    bit = false;
+    next = nullptr;
+    back = nullptr;
+}
+
+Node::Node(bool bit) {
+    this->bit = bit;
+    next = nullptr;
+    back = nullptr;
+}
+
+DLinkedList::~DLinkedList() {
+    Node *temp = head;
+    Node *nexttemp = head->next;
+    while (temp != nullptr) {
+        temp->back = nullptr;
+        temp->next = nullptr;
+        delete temp;
+        temp = nexttemp;
+        if (temp != nullptr) nexttemp = temp->next;
+    }
+}
+
 DLinkedList::DLinkedList(unsigned int ones, unsigned int zeros) {
     
-    head = new Node();
-    head->bit = false;
+    head = new Node(false);
     zeros--;
     unsigned long total = ones + zeros;
     Node * tempback = head;
     for(unsigned int i = 0; i < total; i++) {
         if (zeros) {
-            Node* temp = new Node();
-            temp->bit = false;
+            Node* temp = new Node(false);
             temp->back = tempback;
             tempback->next = temp;
             tempback = temp;
             zeros--;
         }
         else {
-            Node* temp = new Node();
-            temp->bit = true;
+            Node* temp = new Node(true);
             temp->back = tempback;
             tempback->next = temp;
             tempback = temp;
@@ -26,6 +55,26 @@ DLinkedList::DLinkedList(unsigned int ones, unsigned int zeros) {
         }
     }
 }
+
+DLinkedList::DLinkedList(DLinkedList const &doublelinkedlist) {
+    Node *oldtemp = doublelinkedlist.getHead()->next;
+    head = new Node(doublelinkedlist.getHead());
+    Node *temp = head->next;
+    Node *tback = head;
+    while (oldtemp != nullptr) {
+      temp = new Node(oldtemp);
+      temp->back = tback;
+      tback->next = temp;
+      tback = temp;
+      temp = temp->next;
+      oldtemp = oldtemp->next;
+    }
+}
+
+ Node* DLinkedList::getHead() const {
+    return head;
+}
+
 void DLinkedList::moveNNodesLeft(unsigned int N, unsigned int at) {
     /* at is the start of the nodes to
      * move and N is the number including at to move
